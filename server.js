@@ -21,13 +21,13 @@ server.on('connection', (client) => {
     //console.log(data)
 
     if (fs.existsSync(`./serverFiles/${data}`)) {
-      // client.write(`File ${data} has been found!`)
+      client.write(`File ${data} has been found!`)
       loadFile(data, (file) => {
         client.write(file);
       });
 
     } else {
-      // client.write(`Cannot find a file ${data}`)
+      client.write(`Cannot find a file ${data}`)
     }
   });
 });

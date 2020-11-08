@@ -13,6 +13,7 @@ const saveFileYes = function(data, path) {
   })
 };
 
+
 const conn = net.createConnection({ 
   host: '10.0.2.15', // change to IP address of computer or ngrok host if tunneling
   port: 3000 // or change to the ngrok port if tunneling
@@ -22,21 +23,20 @@ conn.setEncoding('utf8'); // interpret data as text
 
 let transfer = false;
 conn.on('data', (data) => {
-  saveFileYes(data, file);
-  // console.log(transfer)
-  // if (transfer) {
-  //   saveFileYes(data, file)
-  // } else {
-  //   console.log('Server says: ', data);
-  // }
-  // 
-  // if (data === `File ${file} has been found!`) {
-  //   transfer = true;
-  // }
-  // 
-  // if (data === `Cannot find a file ${file}`) {
-  //   process.exit();
-  // }
+  
+   if (transfer) {
+     saveFileYes(data, file)
+   } else {
+     console.log('Server says: ', data);
+   }
+   
+   if (data === `File ${file} has been found!`) {
+     transfer = true;
+   }
+   
+   if (data === `Cannot find a file ${file}`) {
+     process.exit();
+   }
 });
 
 conn.on('connect', () => {
